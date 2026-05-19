@@ -1,0 +1,274 @@
+<!doctype html>
+<html lang="ru">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Whisper Desktop</title>
+    <link rel="stylesheet" href="frontend/css/style.css" />
+  </head>
+  <body>
+    <!-- Header Section -->
+    <header class="header">
+      <div>
+        <div class="logo-section">
+          <h1 class="logo-gradient">Whisper Pro</h1>
+          <span class="open-source-badge">Open Source</span>
+        </div>
+        <p class="app-description">Инструмент расшифровки аудио на базе ИИ</p>
+      </div>
+      <div class="status-indicator-container">
+        <span id="status-indicator" class="status-indicator-dot"></span>
+        <div class="flex-col">
+          <span id="status-text" class="status-text">Готов к работе</span>
+          <span id="status-subtext" class="status-subtext">Модель: Base</span>
+        </div>
+      </div>
+    </header>
+
+    <div class="app-container">
+      <!-- Left Sidebar -->
+      <aside class="sidebar">
+        <div class="glass-panel">
+          <h2 class="section-header">Настройки модели</h2>
+
+          <div class="form-field-group">
+            <label class="form-field-label">Модель Whisper</label>
+            <select id="model-select" class="form-select">
+              <option value="" disabled selected>Выберите модель...</option>
+              <option value="tiny">Tiny (Мгновенно | ~75 МБ)</option>
+              <option value="base">Base (Быстро x7 | ~140 МБ)</option>
+              <option value="small">Small (Точно x2 | ~460 МБ)</option>
+              <option value="medium">Medium (Качественно x1 | ~1.5 ГБ)</option>
+              <option value="large">Large (Максимум | ~3 ГБ)</option>
+            </select>
+          </div>
+
+          <div class="form-field-group">
+            <label class="form-field-label">Язык (откуда)</label>
+            <select id="lang-select" class="form-select">
+              <option value="auto">Автоопределение</option>
+              <option value="ru">Русский</option>
+              <option value="en">Английский</option>
+              <option value="de">Немецкий</option>
+              <option value="fr">Французский</option>
+            </select>
+          </div>
+
+          <!-- Режим перевода -->
+          <div class="translate-panel" id="translate-panel">
+            <label
+              class="checkbox-container translate font-bold text-slate-300"
+            >
+              <input
+                type="checkbox"
+                id="translate-toggle"
+                onchange="toggleTranslateMode()"
+              />
+              <span class="checkmark"></span>
+              Мгновенный перевод в EN
+            </label>
+            <p class="text-[9px] text-slate-500 mt-2 leading-tight">
+              Диктуйте на любом языке — Whisper выдаст текст сразу на
+              английском.
+            </p>
+          </div>
+
+          <div class="form-field-group">
+            <label class="form-field-label">Горячая клавиша записи</label>
+            <div class="hotkey-input-container">
+              <input
+                type="text"
+                id="hotkey-display"
+                class="form-select text-center font-mono tracking-widest"
+                readonly
+                placeholder="Нажмите 'Изменить' для установки комбинации"
+              />
+              <button id="change-hotkey-btn" class="change-hotkey-button">
+                Сменить
+              </button>
+            </div>
+          </div>
+        </div>
+
+        <div class="glass-panel font-medium">
+          <h2 class="section-header">Режим работы</h2>
+
+          <div class="work-mode-container">
+            <label id="mode-mic" class="work-mode-option">
+              <input
+                type="radio"
+                name="mode"
+                value="mic"
+                checked
+                class="hidden"
+              />
+              <div class="mode-icon">🎤</div>
+              <div class="mode-info">
+                <div class="mode-title">Голосовой набор</div>
+                <div class="mode-description">Вставка текста под курсор</div>
+                <!-- <div class="mode-description">
+                  <label class="checkbox-container">
+                    <input type="checkbox" id="auto-insert-toggle" checked />
+                    <span class="checkmark"></span>
+                    Вставлять текст под курсор
+                  </label>
+                </div> -->
+              </div>
+            </label>
+
+            <label id="mode-file" class="work-mode-option">
+              <input type="radio" name="mode" value="file" class="hidden" />
+              <div class="mode-icon mode-icon-file">📂</div>
+              <div class="mode-info">
+                <div class="mode-title">Транскрибация файла</div>
+                <div class="mode-description">Обработка аудиозаписей</div>
+              </div>
+            </label>
+          </div>
+        </div>
+      </aside>
+
+      <!-- Main Content Area -->
+      <main class="main-content">
+        <div
+          id="file-context"
+          class="glass-panel file-context-container hidden"
+        >
+          <div class="file-info-block">
+            <button id="select-file-btn" class="file-select-button">
+              Выбрать аудиофайл
+            </button>
+            <div class="text-right leading-tight">
+              <div id="filename" class="file-name">Файл не выбран</div>
+              <div id="fileinfo" class="file-details">
+                Длительность: 00:00 | Размер: 0 MB
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <div class="output-panel glass-panel">
+          <div class="output-panel-header">
+            <div class="result-options-container">
+              <span class="result-label">Результат</span>
+              <div id="subtitle-container" class="hidden">
+                <label class="checkbox-container">
+                  <input type="checkbox" id="subtitle-toggle" />
+                  <span class="checkmark"></span>
+                  Субтитры (.srt)
+                </label>
+              </div>
+              <label class="checkbox-container">
+                <input type="checkbox" id="timestamps-toggle" />
+                <span class="checkmark"></span>
+                Таймкоды
+              </label>
+              <label class="checkbox-container">
+                <input type="checkbox" id="speakers-toggle" />
+                <span class="checkmark"></span>
+                Спикеры
+              </label>
+            </div>
+            <div class="control-buttons-container">
+              <button id="copy-btn" class="control-button">
+                📋 Копировать
+              </button>
+              <button id="save-btn" class="control-button">💾 Сохранить</button>
+            </div>
+          </div>
+
+          <div id="speaker-settings-panel" class="speaker-settings-panel hidden">
+            <div class="speaker-settings-grid">
+              <div class="form-field-group">
+                <label class="form-field-label">Hugging Face Token</label>
+                <input
+                  type="password"
+                  id="pyannote-token-input"
+                  class="form-select"
+                  data-config-key="pyannote_token"
+                  autocomplete="off"
+                />
+              </div>
+              <div class="form-field-group">
+                <label class="form-field-label">Модель pyannote</label>
+                <input
+                  type="text"
+                  id="pyannote-model-input"
+                  class="form-select"
+                  data-config-key="pyannote_model"
+                  placeholder="pyannote/speaker-diarization-3.1"
+                />
+              </div>
+              <div class="speaker-count-fields">
+                <div class="form-field-group">
+                  <label class="form-field-label">Мин. спикеров</label>
+                  <input
+                    type="number"
+                    id="pyannote-min-speakers-input"
+                    class="form-select"
+                    data-config-key="pyannote_min_speakers"
+                    min="1"
+                    max="20"
+                  />
+                </div>
+                <div class="form-field-group">
+                  <label class="form-field-label">Макс. спикеров</label>
+                  <input
+                    type="number"
+                    id="pyannote-max-speakers-input"
+                    class="form-select"
+                    data-config-key="pyannote_max_speakers"
+                    min="1"
+                    max="20"
+                  />
+                </div>
+              </div>
+            </div>
+          </div>
+
+          <textarea
+            id="output-text"
+            class="output-textarea custom-scrollbar"
+            placeholder="Здесь появится текст после обработки..."
+          ></textarea>
+        </div>
+
+        <!-- Action Area -->
+        <div class="action-area">
+          <div id="progress-container" class="progress-container hidden">
+            <div class="progress-header">
+              <div class="flex-col">
+                <span id="progress-status" class="progress-status"
+                  >Процесс обработки</span
+                >
+                <span id="time-display" class="time-display"
+                  >00:00 / 00:00</span
+                >
+              </div>
+              <span id="progress-percent" class="progress-percent">0%</span>
+            </div>
+            <div class="progress-bar-container">
+              <div
+                id="progress-bar"
+                class="progress-bar"
+                style="width: 0%"
+              ></div>
+            </div>
+          </div>
+
+          <div style="display: flex; gap: 10px">
+            <button id="cancel-action-btn" class="cancel-button hidden">
+              ✕ Отмена
+            </button>
+            <button id="main-action-btn" class="action-button">
+              Начать транскрибацию
+            </button>
+          </div>
+        </div>
+      </main>
+    </div>
+
+    <!-- Подключение JavaScript файлов -->
+    <script type="module" src="frontend/js/app.js"></script>
+  </body>
+</html>

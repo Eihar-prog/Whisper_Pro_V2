@@ -1,0 +1,16 @@
+{
+    "model_size": "",
+    "source_language": "auto",
+    "translate_to_english": false,
+    "hotkey_record": "ctrl+shift+space",
+    "operation_mode": "file",
+    "audio_input_dir": "",
+    "text_output_dir": "",
+    "generate_subtitles": true,
+    "include_timestamps": false,
+    "enable_speaker_diarization": false,
+    "pyannote_token": "",
+    "pyannote_model": "pyannote/speaker-diarization-3.1",
+    "pyannote_min_speakers": "",
+    "pyannote_max_speakers": ""
+}

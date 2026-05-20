@@ -1,7 +1,7 @@
 # 🔇 Тяжёлые файлы и папки — не коммитим
 /ai_models/
 /ffmpeg/
-/Исходники/
+/backend/ffmpeg/
 
 # 🐍 Python
 __pycache__/
@@ -46,3 +46,18 @@ secrets.json
 *.tmp
 *.temp
 *.bak
+
+# --- Pytest & Coverage ---
+# Папка кэша pytest
+.pytest_cache/
+
+# Файл с сырыми данными покрытия
+.coverage
+.coverage.*
+
+# Папка с красивым HTML-отчетом (которую мы открывали в браузере)
+htmlcov/
+
+# Альтернативные отчеты (если появятся файлы xml или log)
+coverage.xml
+*.lcov

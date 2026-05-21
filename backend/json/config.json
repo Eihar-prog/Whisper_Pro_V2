@@ -12,5 +12,6 @@
     "pyannote_token": "",
     "pyannote_model": "pyannote/speaker-diarization-3.1",
     "pyannote_min_speakers": "",
-    "pyannote_max_speakers": ""
+    "pyannote_max_speakers": "",
+    "app_language": "en"
 }

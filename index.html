@@ -14,12 +14,16 @@
           <h1 class="logo-gradient">Whisper Pro</h1>
           <span class="open-source-badge">Open Source</span>
         </div>
-        <p class="app-description">Инструмент расшифровки аудио на базе ИИ</p>
+        <p class="app-description" data-i18n="app_description">
+          Инструмент расшифровки аудио на базе ИИ
+        </p>
       </div>
       <div class="status-indicator-container">
         <span id="status-indicator" class="status-indicator-dot"></span>
         <div class="status-text-container">
-          <span id="status-text" class="status-text">Готов к работе</span>
+          <span id="status-text" class="status-text" data-i18n="status_ready"
+            >Готов к работе</span
+          >
           <span id="status-subtext" class="status-subtext">Модель: Base</span>
         </div>
         <span class="status-divider"></span>
@@ -42,10 +46,14 @@
       <!-- Left Sidebar -->
       <aside class="sidebar">
         <div class="glass-panel">
-          <h2 class="section-header">Настройки модели</h2>
+          <h2 class="section-header" data-i18n="model_settings_title">
+            Настройки модели
+          </h2>
 
           <div class="form-field-group">
-            <label class="form-field-label">Модель Whisper</label>
+            <label class="form-field-label" data-i18n="whisper_model_label"
+              >Модель Whisper</label
+            >
             <select
               id="model-select"
               class="form-select"
@@ -63,10 +71,8 @@
               <option value="base" selected>Base (~140 МБ)</option>
               <option value="small">Small (~460 МБ)</option>
               <option value="medium">Medium (~1.5 ГБ)</option>
-              <option value="turbo">⚡ Turbo (~1.6 ГБ) — Топ!</option>
-              <option value="large-v3">
-                Large-v3 (~3 ГБ) — Макс. качество
-              </option>
+              <option value="turbo">Turbo (~1.6 ГБ) ⚡</option>
+              <option value="large-v3">Large-v3 (~3 ГБ)</option>
             </select>
 
             <select
@@ -87,13 +93,15 @@
               <option value="base.en">Base.en (~140 MB)</option>
               <option value="small.en">Small.en (~460 MB)</option>
               <option value="medium.en">Medium.en (~1.5 GB)</option>
-              <option value="turbo">⚡ Turbo (~1.6 GB)</option>
+              <option value="turbo">Turbo (~1.6 GB) ⚡</option>
               <option value="large-v3">Large-v3 (~3 GB)</option>
             </select>
           </div>
 
           <div class="form-field-group">
-            <label class="form-field-label">Язык (откуда)</label>
+            <label class="form-field-label" data-i18n="source_lang_label"
+              >Язык аудио</label
+            >
             <select
               id="lang-select"
               class="form-select"
@@ -123,16 +131,23 @@
                 data-config="translate_to_english"
               />
               <span class="checkmark"></span>
-              Мгновенный перевод в EN
+              <span data-i18n="translate_toggle_label"
+                >Мгновенный перевод в EN</span
+              >
             </label>
-            <p class="text-[9px] text-slate-500 mt-2 leading-tight">
+            <p
+              class="text-[9px] text-slate-500 mt-2 leading-tight"
+              data-i18n="translate_toggle_desc"
+            >
               Диктуйте на любом языке — Whisper выдаст текст сразу на
               английском.
             </p>
           </div>
 
           <div class="form-field-group">
-            <label class="form-field-label">Горячая клавиша записи</label>
+            <label class="form-field-label" data-i18n="hotkey_label"
+              >Горячая клавиша записи</label
+            >
             <div class="hotkey-input-container">
               <input
                 type="text"
@@ -141,8 +156,13 @@
                 readonly
                 placeholder="Нажмите 'Изменить' для установки комбинации"
                 data-config="hotkey_record"
+                data-i18n-placeholder="hotkey_placeholder"
               />
-              <button id="change-hotkey-btn" class="change-hotkey-button">
+              <button
+                id="change-hotkey-btn"
+                class="change-hotkey-button"
+                data-i18n="btn_change"
+              >
                 Сменить
               </button>
             </div>
@@ -150,7 +170,9 @@
         </div>
 
         <div class="glass-panel font-medium">
-          <h2 class="section-header">Режим работы</h2>
+          <h2 class="section-header" data-i18n="work_mode_title">
+            Режим работы
+          </h2>
 
           <div class="work-mode-container">
             <label id="mode-mic" class="work-mode-option">
@@ -164,8 +186,12 @@
               />
               <div class="mode-icon">🎤</div>
               <div class="mode-info">
-                <div class="mode-title">Голосовой набор</div>
-                <div class="mode-description">Вставка текста под курсор</div>
+                <div class="mode-title" data-i18n="mode_mic_title">
+                  Голосовой набор
+                </div>
+                <div class="mode-description" data-i18n="mode_mic_desc">
+                  Вставка текста под курсор
+                </div>
                 <!-- <div class="mode-description">
                   <label class="checkbox-container">
                     <input type="checkbox" id="auto-insert-toggle" checked />
@@ -186,8 +212,12 @@
               />
               <div class="mode-icon mode-icon-file">📂</div>
               <div class="mode-info">
-                <div class="mode-title">Транскрибация файла</div>
-                <div class="mode-description">Обработка аудиозаписей</div>
+                <div class="mode-title" data-i18n="mode_file_title">
+                  Транскрибация файла
+                </div>
+                <div class="mode-description" data-i18n="mode_file_desc">
+                  Обработка аудиозаписей
+                </div>
               </div>
             </label>
           </div>
@@ -201,12 +231,26 @@
           class="glass-panel file-context-container hidden"
         >
           <div class="file-info-block">
-            <button id="select-file-btn" class="file-select-button">
+            <button
+              id="select-file-btn"
+              class="file-select-button"
+              data-i18n="btn_select_file"
+            >
               Выбрать аудиофайл
             </button>
             <div class="text-right leading-tight">
-              <div id="filename" class="file-name">Файл не выбран</div>
-              <div id="fileinfo" class="file-details">
+              <div
+                id="filename"
+                class="file-name"
+                data-i18n="file_not_selected"
+              >
+                Файл не выбран
+              </div>
+              <div
+                id="fileinfo"
+                class="file-details"
+                data-i18n="file_details_empty"
+              >
                 Длительность: 00:00 | Размер: 0 MB
               </div>
             </div>
@@ -216,16 +260,14 @@
         <div class="output-panel glass-panel">
           <div class="output-panel-header">
             <div class="result-options-container">
-              <span class="result-label">Результат</span>
+              <span class="result-label" data-i18n="result_label"
+                >Результат</span
+              >
               <div id="subtitle-container" class="hidden">
-                <label class="checkbox-container">
-                  <input
-                    type="checkbox"
-                    id="subtitle-toggle"
-                    data-config="generate_subtitles"
-                  />
+                <label class="checkbox-container" data-i18n="subtitles_label">
+                  <input type="checkbox" id="subtitle-toggle" />
                   <span class="checkmark"></span>
-                  Субтитры (.srt)
+                  <span data-config="generate_subtitles">Субтитры (.srt)</span>
                 </label>
               </div>
               <label class="checkbox-container">
@@ -235,7 +277,7 @@
                   data-config="include_timestamps"
                 />
                 <span class="checkmark"></span>
-                Таймкоды
+                <span data-i18n="timestamps_label">Таймкоды</span>
               </label>
               <label class="checkbox-container">
                 <input
@@ -244,7 +286,7 @@
                   data-config="enable_speaker_diarization"
                 />
                 <span class="checkmark"></span>
-                Спикеры
+                <span data-i18n="speakers_label">Спикеры</span>
               </label>
               <!-- Стрелка сворачивания панели спикеров -->
               <button
@@ -258,13 +300,16 @@
             </div>
             <div class="control-buttons-container">
               <button id="copy-btn" class="control-button">
-                📋 Копировать
+                📋 <span data-i18n="btn_copy">Копировать</span>
               </button>
-              <button id="save-btn" class="control-button">💾 Сохранить</button>
+              <button id="save-btn" class="control-button">
+                💾 <span data-i18n="btn_save">Сохранить</span>
+              </button>
               <button
                 id="save-settings-toggle"
                 class="control-button settings-gear"
                 title="Настройки сохранения"
+                data-i18n-title="settings_gear_title"
               >
                 ⚙️
               </button>
@@ -276,19 +321,23 @@
             class="speaker-settings-panel hidden"
           >
             <div class="speaker-settings-header">
-              <span class="speaker-settings-title">Настройки pyannote</span>
+              <span class="speaker-settings-title" data-i18n="pyannote_title"
+                >Настройки pyannote</span
+              >
               <button
                 id="pyannote-edit-btn"
                 class="pyannote-edit-btn"
                 title="Редактировать чувствительные настройки"
                 aria-label="Переключить режим редактирования"
               >
-                <span class="edit-btn-text">📝 Ред.</span>
+                <span class="edit-btn-text" data-i18n="btn_edit">📝 Ред.</span>
               </button>
             </div>
             <div class="speaker-settings-grid">
               <div class="form-field-group">
-                <label class="form-field-label">Hugging Face Token</label>
+                <label class="form-field-label" data-i18n="hf_token_label"
+                  >Hugging Face Token</label
+                >
                 <input
                   type="password"
                   id="pyannote-token-input"
@@ -300,7 +349,9 @@
                 />
               </div>
               <div class="form-field-group">
-                <label class="form-field-label">Модель pyannote</label>
+                <label class="form-field-label" data-i18n="pyannote_model_label"
+                  >Модель pyannote</label
+                >
                 <input
                   type="text"
                   id="pyannote-model-input"
@@ -313,7 +364,9 @@
               </div>
               <div class="speaker-count-fields">
                 <div class="form-field-group">
-                  <label class="form-field-label">Мин. спикеров</label>
+                  <label class="form-field-label" data-i18n="min_speakers_label"
+                    >Мин. спикеров</label
+                  >
                   <input
                     type="number"
                     id="pyannote-min-speakers-input"
@@ -325,7 +378,9 @@
                   />
                 </div>
                 <div class="form-field-group">
-                  <label class="form-field-label">Макс. спикеров</label>
+                  <label class="form-field-label" data-i18n="max_speakers_label"
+                    >Макс. спикеров</label
+                  >
                   <input
                     type="number"
                     id="pyannote-max-speakers-input"
@@ -357,8 +412,10 @@
               <span class="save-setting-divider"></span>
 
               <!-- Папка сохранения (кастомные радио) -->
-              <span class="save-setting-label">📂 Папка:</span>
-              <label class="radio-container">
+              <span class="save-setting-label" data-i18n="folder_label"
+                >📂 Папка:</span
+              >
+              <label class="radio-container" data-i18n="folder_original">
                 <input
                   type="radio"
                   name="save-folder"
@@ -382,6 +439,7 @@
                   class="folder-path clickable"
                   title="Выбрать папку"
                   data-config="custom_save_folder"
+                  data-i18n-placeholder="folder_select_placeholder"
                   >Выбрать папку...</span
                 >
               </label>
@@ -392,6 +450,7 @@
             id="output-text"
             class="output-textarea custom-scrollbar"
             placeholder="Здесь появится текст после обработки..."
+            data-i18n-placeholder="output_placeholder"
           ></textarea>
         </div>
 
@@ -400,7 +459,10 @@
           <div id="progress-container" class="progress-container hidden">
             <div class="progress-header">
               <div class="flex-col">
-                <span id="progress-status" class="progress-status"
+                <span
+                  id="progress-status"
+                  class="progress-status"
+                  data-i18n="progress_title"
                   >Процесс обработки</span
                 >
                 <span id="time-display" class="time-display"
@@ -419,10 +481,18 @@
           </div>
 
           <div style="display: flex; gap: 10px">
-            <button id="cancel-action-btn" class="cancel-button hidden">
+            <button
+              id="cancel-action-btn"
+              class="cancel-button hidden"
+              data-i18n="btn_cancel"
+            >
               ✕ Отмена
             </button>
-            <button id="main-action-btn" class="action-button">
+            <button
+              id="main-action-btn"
+              class="action-button"
+              data-i18n="btn_start"
+            >
               Начать транскрибацию
             </button>
           </div>

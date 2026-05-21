@@ -18,10 +18,23 @@
       </div>
       <div class="status-indicator-container">
         <span id="status-indicator" class="status-indicator-dot"></span>
-        <div class="flex-col">
+        <div class="status-text-container">
           <span id="status-text" class="status-text">Готов к работе</span>
           <span id="status-subtext" class="status-subtext">Модель: Base</span>
         </div>
+        <span class="status-divider"></span>
+        <label class="header-language-control">
+          <span class="header-language-label">Language</span>
+          <select
+            id="interface-language-select"
+            class="header-language-select"
+            data-config="interface_language"
+          >
+            <option value="ru" selected>Russian</option>
+            <option value="uk">Ukrainian</option>
+            <option value="en">English</option>
+          </select>
+        </label>
       </div>
     </header>
 

@@ -61,6 +61,11 @@
   box-shadow: 0 0 0 2px rgba(59, 130, 246, 0.2);
 }
 
+.form-select option {
+  background-color: #1e293b;
+  color: #f1f5f9;
+}
+
 /* Перевод панель */
 .translate-panel {
   margin-top: 4px; /* mt-1 */

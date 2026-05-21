@@ -33,24 +33,69 @@
 
           <div class="form-field-group">
             <label class="form-field-label">Модель Whisper</label>
-            <select id="model-select" class="form-select">
-              <option value="" disabled selected>Выберите модель...</option>
-              <option value="tiny">Tiny (Мгновенно | ~75 МБ)</option>
-              <option value="base">Base (Быстро x7 | ~140 МБ)</option>
-              <option value="small">Small (Точно x2 | ~460 МБ)</option>
-              <option value="medium">Medium (Качественно x1 | ~1.5 ГБ)</option>
-              <option value="large">Large (Максимум | ~3 ГБ)</option>
+            <select
+              id="model-select"
+              class="form-select"
+              data-config="model_size"
+            >
+              <option
+                value=""
+                disabled
+                selected
+                data-i18n="select_model_placeholder"
+              >
+                Выберите модель...
+              </option>
+              <option value="tiny">Tiny (~75 МБ)</option>
+              <option value="base" selected>Base (~140 МБ)</option>
+              <option value="small">Small (~460 МБ)</option>
+              <option value="medium">Medium (~1.5 ГБ)</option>
+              <option value="turbo">⚡ Turbo (~1.6 ГБ) — Топ!</option>
+              <option value="large-v3">
+                Large-v3 (~3 ГБ) — Макс. качество
+              </option>
+            </select>
+
+            <select
+              id="model-select-en"
+              class="form-select hidden"
+              data-config="model_size"
+              disabled
+            >
+              <option
+                value=""
+                disabled
+                selected
+                data-i18n="select_model_placeholder"
+              >
+                Select model...
+              </option>
+              <option value="tiny.en">Tiny.en (~75 MB)</option>
+              <option value="base.en">Base.en (~140 MB)</option>
+              <option value="small.en">Small.en (~460 MB)</option>
+              <option value="medium.en">Medium.en (~1.5 GB)</option>
+              <option value="turbo">⚡ Turbo (~1.6 GB)</option>
+              <option value="large-v3">Large-v3 (~3 GB)</option>
             </select>
           </div>
 
           <div class="form-field-group">
             <label class="form-field-label">Язык (откуда)</label>
-            <select id="lang-select" class="form-select">
-              <option value="auto">Автоопределение</option>
-              <option value="ru">Русский</option>
-              <option value="en">Английский</option>
-              <option value="de">Немецкий</option>
-              <option value="fr">Французский</option>
+            <select
+              id="lang-select"
+              class="form-select"
+              data-config="source_language"
+            >
+              <option value="auto" data-i18n="lang_auto">
+                Автоопределение
+              </option>
+              <option value="en" data-i18n="lang_en">Английский</option>
+              <option value="uk" data-i18n="lang_uk">Украинский</option>
+              <option value="ru" data-i18n="lang_ru">Русский</option>
+              <option value="de" data-i18n="lang_de">Немецкий</option>
+              <option value="es" data-i18n="lang_es">Испанский</option>
+              <option value="fr" data-i18n="lang_fr">Французский</option>
+              <option value="pl" data-i18n="lang_pl">Польский</option>
             </select>
           </div>
 
@@ -62,7 +107,7 @@
               <input
                 type="checkbox"
                 id="translate-toggle"
-                onchange="toggleTranslateMode()"
+                data-config="translate_to_english"
               />
               <span class="checkmark"></span>
               Мгновенный перевод в EN
@@ -82,6 +127,7 @@
                 class="form-select text-center font-mono tracking-widest"
                 readonly
                 placeholder="Нажмите 'Изменить' для установки комбинации"
+                data-config="hotkey_record"
               />
               <button id="change-hotkey-btn" class="change-hotkey-button">
                 Сменить
@@ -101,6 +147,7 @@
                 value="mic"
                 checked
                 class="hidden"
+                data-config="operation_mode"
               />
               <div class="mode-icon">🎤</div>
               <div class="mode-info">
@@ -117,7 +164,13 @@
             </label>
 
             <label id="mode-file" class="work-mode-option">
-              <input type="radio" name="mode" value="file" class="hidden" />
+              <input
+                type="radio"
+                name="mode"
+                value="file"
+                class="hidden"
+                data-config="operation_mode"
+              />
               <div class="mode-icon mode-icon-file">📂</div>
               <div class="mode-info">
                 <div class="mode-title">Транскрибация файла</div>
@@ -153,31 +206,73 @@
               <span class="result-label">Результат</span>
               <div id="subtitle-container" class="hidden">
                 <label class="checkbox-container">
-                  <input type="checkbox" id="subtitle-toggle" />
+                  <input
+                    type="checkbox"
+                    id="subtitle-toggle"
+                    data-config="generate_subtitles"
+                  />
                   <span class="checkmark"></span>
                   Субтитры (.srt)
                 </label>
               </div>
               <label class="checkbox-container">
-                <input type="checkbox" id="timestamps-toggle" />
+                <input
+                  type="checkbox"
+                  id="timestamps-toggle"
+                  data-config="include_timestamps"
+                />
                 <span class="checkmark"></span>
                 Таймкоды
               </label>
               <label class="checkbox-container">
-                <input type="checkbox" id="speakers-toggle" />
+                <input
+                  type="checkbox"
+                  id="speakers-toggle"
+                  data-config="enable_speaker_diarization"
+                />
                 <span class="checkmark"></span>
                 Спикеры
               </label>
+              <!-- Стрелка сворачивания панели спикеров -->
+              <button
+                id="speaker-panel-toggle"
+                class="speaker-panel-toggle-btn hidden"
+                title="Свернуть/развернуть настройки"
+                aria-label="Переключить панель настроек спикеров"
+              >
+                <span class="toggle-chevron">⏷</span>
+              </button>
             </div>
             <div class="control-buttons-container">
               <button id="copy-btn" class="control-button">
                 📋 Копировать
               </button>
               <button id="save-btn" class="control-button">💾 Сохранить</button>
+              <button
+                id="save-settings-toggle"
+                class="control-button settings-gear"
+                title="Настройки сохранения"
+              >
+                ⚙️
+              </button>
             </div>
           </div>
 
-          <div id="speaker-settings-panel" class="speaker-settings-panel hidden">
+          <div
+            id="speaker-settings-panel"
+            class="speaker-settings-panel hidden"
+          >
+            <div class="speaker-settings-header">
+              <span class="speaker-settings-title">Настройки pyannote</span>
+              <button
+                id="pyannote-edit-btn"
+                class="pyannote-edit-btn"
+                title="Редактировать чувствительные настройки"
+                aria-label="Переключить режим редактирования"
+              >
+                <span class="edit-btn-text">📝 Ред.</span>
+              </button>
+            </div>
             <div class="speaker-settings-grid">
               <div class="form-field-group">
                 <label class="form-field-label">Hugging Face Token</label>
@@ -187,6 +282,8 @@
                   class="form-select"
                   data-config-key="pyannote_token"
                   autocomplete="off"
+                  readonly
+                  data-config="pyannote_token"
                 />
               </div>
               <div class="form-field-group">
@@ -197,6 +294,8 @@
                   class="form-select"
                   data-config-key="pyannote_model"
                   placeholder="pyannote/speaker-diarization-3.1"
+                  readonly
+                  data-config="pyannote_model"
                 />
               </div>
               <div class="speaker-count-fields">
@@ -209,6 +308,7 @@
                     data-config-key="pyannote_min_speakers"
                     min="1"
                     max="20"
+                    data-config="pyannote_min_speakers"
                   />
                 </div>
                 <div class="form-field-group">
@@ -220,9 +320,58 @@
                     data-config-key="pyannote_max_speakers"
                     min="1"
                     max="20"
+                    data-config="pyannote_max_speakers"
                   />
                 </div>
               </div>
+            </div>
+          </div>
+
+          <!-- Горизонтальная панель настроек сохранения (компактная) -->
+          <div id="save-settings-panel" class="save-settings-panel hidden">
+            <div class="save-settings-row">
+              <!-- Auto-Save (в стиле приложения) -->
+              <label class="checkbox-container">
+                <input
+                  type="checkbox"
+                  id="auto-save-toggle"
+                  data-config="auto_save"
+                />
+                <span class="checkmark"></span>
+                Auto-Save
+              </label>
+
+              <span class="save-setting-divider"></span>
+
+              <!-- Папка сохранения (кастомные радио) -->
+              <span class="save-setting-label">📂 Папка:</span>
+              <label class="radio-container">
+                <input
+                  type="radio"
+                  name="save-folder"
+                  value="original"
+                  checked
+                  data-config="save_folder_mode"
+                />
+                <span class="radio-mark"></span>
+                В папке оригинала
+              </label>
+              <label class="radio-container">
+                <input
+                  type="radio"
+                  name="save-folder"
+                  value="custom"
+                  data-config="save_folder_mode"
+                />
+                <span class="radio-mark"></span>
+                <span
+                  id="custom-folder-display"
+                  class="folder-path clickable"
+                  title="Выбрать папку"
+                  data-config="custom_save_folder"
+                  >Выбрать папку...</span
+                >
+              </label>
             </div>
           </div>
 
